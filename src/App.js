@@ -4,10 +4,7 @@ import LiveDataPage from './LiveDataPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Live Weather and Water Data</h1>
-      </header>
+    <div className="App">    
       <main>
         <LiveDataPage />
       </main>

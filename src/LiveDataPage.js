@@ -82,6 +82,28 @@ const LiveDataPage = () => {
     setSelectedStation(event.target.value);
   };
 
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      const x = event.clientX / window.innerWidth;
+      const y = event.clientY / window.innerHeight;
+      document.body.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, #003057, #001F3D)`;
+    };
+  
+    const handleScroll = () => {
+      const yScroll = window.scrollY / document.body.scrollHeight;
+      document.body.style.backgroundPosition = `50% ${yScroll * 200}%`;
+    };
+  
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+
   return (
     <div>
       <h1>Live Weather and Water Data</h1>
