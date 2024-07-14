@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataDisplay from './DataDisplay';
 import { regions } from './stations';
+import Wave from 'react-wavify';
 import './LiveDataPage.css';
 
 const LiveDataPage = () => {
@@ -102,10 +103,44 @@ const LiveDataPage = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  
 
   return (
-    <div>
+    <div className="page-container">
+      <div className="wave-container">
+        <Wave
+          fill="rgba(18, 119, 176, 0.45)"
+          paused={false}
+          options={{
+            height: 20,
+            amplitude: 20,
+            speed: 0.15,
+            points: 3
+          }}
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
+        />
+        <Wave
+          fill="rgba(10, 90, 150, 0.45)"
+          paused={false}
+          options={{
+            height: 30,
+            amplitude: 30,
+            speed: 0.2,
+            points: 5
+          }}
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
+        />
+        <Wave
+          fill="rgba(5, 60, 120, 0.45)"
+          paused={false}
+          options={{
+            height: 40,
+            amplitude: 40,
+            speed: 0.25,
+            points: 4
+          }}
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
+        />
+      </div>
       <h1>Live Weather and Water Data</h1>
       <div className="select-container">
         <select value={selectedRegion} onChange={handleRegionChange}>
@@ -130,7 +165,7 @@ const LiveDataPage = () => {
       </div>
 
       {isLoading ? (
-        <p>Loading data...</p>
+        <p>Select station to load data...</p>
       ) : hasError ? (
         <p>Failed to load data</p>
       ) : (
@@ -151,6 +186,8 @@ const LiveDataPage = () => {
         style={{ border: 'none', marginTop: '20px' }}
         title="NWS Radar"
       ></iframe>
+      <h3>All data is collected from NOAA and NWS</h3>
+      <p>Buy me a coffee!   Cashapp: <b>$SW1337</b></p>
     </div>
   );
 };

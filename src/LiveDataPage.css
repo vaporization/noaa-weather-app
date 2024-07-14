@@ -1,105 +1,120 @@
 body, html {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    transition: background 0.1s ease;
-    color: #fff;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  transition: background 0.1s ease;
+  color: #fff;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 h1, h2 {
-    color: #FFF;
+  color: #FFF;
+  position: relative;
+  z-index: 2; /* Higher z-index to appear above the wave */
+  text-align: center;
 }
 
-#gradient-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, #003057, #001F3D);
-    transition: background 0.1s ease;
+.page-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh; /* Ensure the page container covers at least the full viewport height */
+  overflow: hidden; /* Hide overflow content */
+}
+
+.wave-container {
+  position: fixed; /* Fixed position to always be at the top */
+  width: 100%;
+  top: 0;
+  height: 150px; /* Set height to accommodate wave header */
+  z-index: 0; /* Lower z-index to place behind other elements */
+  transform: rotate(180deg); /* Rotate the wave */
 }
 
 .select-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 112px; /* Adjust margin to ensure content is visible below the wave */
+  margin-bottom: 20px;
+  z-index: 1; /* Higher z-index to appear above the wave */
+  position: relative;
 }
 
 select {
-    margin: 0 10px;
-    padding: 10px;
-    font-size: 1em;
-    background-color: #404A5A; /* New Blue Color */
-    color: white;
-    border: 1px solid #1C6EA4; /* Darker Blue */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  margin: 0 10px;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #404A5A; /* New Blue Color */
+  color: white;
+  border: 1px solid #1C6EA4; /* Darker Blue */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 select:hover {
-    background-color: #1C6EA4; /* Darker Blue */
+  background-color: #1C6EA4; /* Darker Blue */
 }
 
 .data-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin to ensure content is visible below the wave */
+  z-index: 1; /* Higher z-index to appear above the wave */
+  position: relative;
 }
 
 .data-column {
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: calc(33.33% - 40px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    max-height: 500px;
-    overflow-y: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: calc(33.33% - 40px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .data-column:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .data-column h2 {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #003057; /* Monarch Blue */
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #003057; /* Monarch Blue */
 }
 
 .data-entry {
-    background: #fff;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+  background: #fff;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .data-entry:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 .data-entry.highlight {
-    background: #d4edda;
-    border-left: 5px solid #28a745;
+  background: #d4edda;
+  border-left: 5px solid #28a745;
 }
 
 .data-entry p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #003057; /* Monarch Blue */
+  margin: 0;
+  font-size: 0.9em;
+  color: #003057; /* Monarch Blue */
 }
 
 .data-entry p strong {
-    display: inline-block;
-    width: 60px;
-    color: #001F3D; /* Darker Blue */
+  display: inline-block;
+  width: 60px;
+  color: #001F3D; /* Darker Blue */
 }
