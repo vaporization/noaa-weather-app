@@ -167,7 +167,7 @@ const LiveDataPage = () => {
       {isLoading ? (
         <p>Select station to load data...</p>
       ) : hasError ? (
-        <p>Failed to load data</p>
+        <p>Failed to load data or no data available. Station might be offline.</p>
       ) : (
         <div className="data-container">
           <DataDisplay title="Water Level" data={data.waterLevel} />
