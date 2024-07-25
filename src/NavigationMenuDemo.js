@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from './firebase'; // Make sure you have the correct path to your firebase config
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { CaretDownIcon } from '@radix-ui/react-icons';
+import { auth } from './firebase'; // Make sure you have the correct path to your firebase config
 import './styles.css';
 
 const NavigationMenuDemo = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -23,51 +23,57 @@ const NavigationMenuDemo = () => {
     });
   };
 
-  const toggleMenu = () => {
-    console.log("Menu before toggle:", menuOpen);
-    setMenuOpen(!menuOpen);
-    console.log("Menu after toggle:", !menuOpen);
-  };
-
   return (
-    <div className="NavigationMenuRoot">
-      <div className="NavigationMenuList">
-        <div className="NavigationMenuItem">
-          <button className="NavigationMenuTrigger" onClick={toggleMenu}>
+    <NavigationMenu.Root className="NavigationMenuRoot">
+      <NavigationMenu.List className="NavigationMenuList">
+        <NavigationMenu.Item>
+          <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Menu <CaretDownIcon className="CaretDown" aria-hidden />
-          </button>
-          {menuOpen && (
-            <div className="NavigationMenuContent open">
-              <ul className="List">
-                <li>
-                  <a className="NavigationMenuLink" href="/noaa-weather-app">Home</a>
-                </li>
-                {!isLoggedIn && (
-                  <>
-                    <li>
+          </NavigationMenu.Trigger>
+          <NavigationMenu.Content className="NavigationMenuContent">
+            <ul className="List">
+              <li>
+                <NavigationMenu.Link asChild>
+                  <a className="NavigationMenuLink" href="/noaa-weather-app/">Home</a>
+                </NavigationMenu.Link>
+              </li>
+              {!isLoggedIn && (
+                <>
+                  <li>
+                    <NavigationMenu.Link asChild>
                       <a className="NavigationMenuLink" href="/noaa-weather-app/login">Login</a>
-                    </li>
-                    <li>
+                    </NavigationMenu.Link>
+                  </li>
+                  <li>
+                    <NavigationMenu.Link asChild>
                       <a className="NavigationMenuLink" href="/noaa-weather-app/register">Register</a>
-                    </li>
-                  </>
-                )}
-                {isLoggedIn && (
-                  <>
-                    <li>
+                    </NavigationMenu.Link>
+                  </li>
+                </>
+              )}
+              {isLoggedIn && (
+                <>
+                  <li>
+                    <NavigationMenu.Link asChild>
                       <a className="NavigationMenuLink" href="/noaa-weather-app/profile">Profile</a>
-                    </li>
-                    <li>
+                    </NavigationMenu.Link>
+                  </li>
+                  <li>
+                    <NavigationMenu.Link asChild>
                       <a className="NavigationMenuLink" onClick={handleLogout}>Logout</a>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </div>
-          )}
-        </div>
+                    </NavigationMenu.Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+      </NavigationMenu.List>
+
+      <div className="ViewportPosition">
+        <NavigationMenu.Viewport className="NavigationMenuViewport" />
       </div>
-    </div>
+    </NavigationMenu.Root>
   );
 };
 
