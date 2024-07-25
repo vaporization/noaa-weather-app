@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LiveDataPage from './LiveDataPage';
 import Login from './Login';
@@ -31,7 +31,7 @@ const Layout = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out');
-        window.location.href = '/noaa-weather-app/login';
+        window.location.href = '/noaa-weather-app/';
       })
       .catch((error) => {
         console.error('Error signing out:', error);
@@ -63,7 +63,7 @@ const Layout = () => {
     <>
       <StatusIcon isLoggedIn={isLoggedIn} />
       <NavigationMenuDemo />
-      <div className="page-container">
+      <div className="content">
         <TransitionGroup>
           <CSSTransition key={location.key} classNames="fade" timeout={300}>
             <Routes location={location}>
@@ -85,7 +85,7 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <Router basename="/noaa-weather-app">
+    <Router>
       <div className="wave-container">
         <Wave
           fill="rgba(18, 119, 176, 0.45)"
