@@ -31,7 +31,7 @@ const Layout = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out');
-        window.location.href = '/noaa-weather-app/';
+        window.location.href = '/noaa-weather-app/#/login';
       })
       .catch((error) => {
         console.error('Error signing out:', error);
