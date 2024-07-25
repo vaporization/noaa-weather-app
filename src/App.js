@@ -75,6 +75,7 @@ const Layout = () => {
               <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
               <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
               <Route path="/password-reset" element={<PasswordReset />} /> {/* Add this route */}
+              <Route path="*" element={<LiveDataPage />} /> {/* Catch-all route */}
             </Routes>
           </CSSTransition>
         </TransitionGroup>
