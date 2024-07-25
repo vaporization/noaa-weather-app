@@ -85,7 +85,7 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <Router basename="/noaa-weather-app">
+    <Router>
       <div className="wave-container">
         <Wave
           fill="rgba(18, 119, 176, 0.45)"
