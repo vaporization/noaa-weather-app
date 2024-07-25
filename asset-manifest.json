@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/noaa-weather-app/static/css/main.a26f752d.css",
+    "main.css": "/noaa-weather-app/static/css/main.b2984beb.css",
     "main.js": "/noaa-weather-app/static/js/main.0e5ca1ae.js",
     "index.html": "/noaa-weather-app/index.html",
-    "main.a26f752d.css.map": "/noaa-weather-app/static/css/main.a26f752d.css.map",
+    "main.b2984beb.css.map": "/noaa-weather-app/static/css/main.b2984beb.css.map",
     "main.0e5ca1ae.js.map": "/noaa-weather-app/static/js/main.0e5ca1ae.js.map"
   },
   "entrypoints": [
-    "static/css/main.a26f752d.css",
+    "static/css/main.b2984beb.css",
     "static/js/main.0e5ca1ae.js"
   ]
 }
