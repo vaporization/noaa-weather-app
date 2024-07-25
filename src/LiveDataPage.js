@@ -91,7 +91,7 @@ const LiveDataPage = () => {
       <h1>Live Weather and Water Data</h1>
       <div className="select-container">
         <select value={selectedRegion} onChange={handleRegionChange}>
-          <option value="">Select a region</option>
+         <c> <option value="">Select a region</option> </c>
           {Object.keys(regions).map((region) => (
             <option key={region} value={region}>
               {region}
@@ -101,7 +101,7 @@ const LiveDataPage = () => {
 
         {selectedRegion && (
           <select value={selectedStation} onChange={handleStationChange}>
-            <option value="">Select a station</option>
+           <c> <option value="">Select a station</option> </c>
             {regions[selectedRegion].map((station) => (
               <option key={station.id} value={station.id}>
                 {station.name}
@@ -112,9 +112,9 @@ const LiveDataPage = () => {
       </div>
 
       {isLoading ? (
-        <p>Select station to load data...</p>
+       <c> <p>Select station to load data...</p>
       ) : hasError ? (
-        <p>Failed to load data or no data available. Station might be offline.</p>
+        <p>Failed to load data or no data available. Station might be offline.</p> </c>
       ) : (
         <div className="data-container">
           <DataDisplay title="Water Level" data={data.waterLevel} />
@@ -132,9 +132,9 @@ const LiveDataPage = () => {
 
       <DraggableFrame title="NOAA Essential Fish Habitat Mapper" src="https://www.habitat.noaa.gov/apps/efhmapper/" />
 
-      <h3>All data is collected from NOAA and NWS</h3>
+     <c> <h3>All data is collected from NOAA and NWS</h3>
 
-      <p>Buy me a coffee! Cashapp: <b>$SW1337</b></p>
+      <p>Buy me a coffee! Cashapp: <b>$SW1337</b></p> </c>
     </div>
   );
 };

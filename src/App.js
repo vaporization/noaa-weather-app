@@ -63,22 +63,20 @@ const Layout = () => {
     <>
       <StatusIcon isLoggedIn={isLoggedIn} />
       <NavigationMenuDemo />
-      <div className="content">
-        <TransitionGroup>
-          <CSSTransition key={location.key} classNames="fade" timeout={300}>
-            <Routes location={location}>
-              <Route path="/" element={<LiveDataPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/registration-confirmation" element={<RegistrationConfirmation />} />
-              <Route path="/login-confirmation" element={<LoginConfirmation />} />
-              <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
-              <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
-              <Route path="/password-reset" element={<PasswordReset />} />
-            </Routes>
-          </CSSTransition>
-        </TransitionGroup>
-      </div>
+      <TransitionGroup>
+        <CSSTransition key={location.key} classNames="fade" timeout={300}>
+          <Routes location={location}>
+            <Route path="/" element={<LiveDataPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/registration-confirmation" element={<RegistrationConfirmation />} />
+            <Route path="/login-confirmation" element={<LoginConfirmation />} />
+            <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
+            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
+            <Route path="/password-reset" element={<PasswordReset />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </>
   );
 };
