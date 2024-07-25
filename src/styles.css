@@ -1,3 +1,4 @@
+/* src/styles.css */
 @import '@radix-ui/colors/black-alpha.css';
 @import '@radix-ui/colors/indigo.css';
 @import '@radix-ui/colors/mauve.css';
@@ -11,47 +12,45 @@ p {
 }
 
 .NavigationMenuRoot {
-    position: absolute;
-    top: 20px;
-    right: 50px;
-    z-index: 2;
-  }
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  z-index: 2;
+}
 
-  .NavigationMenuList {
-    display: flex;
-    justify-content: flex-end;
-    background-color: rgba(44, 106, 169, 0.658); /* Transparent background */
-    padding: 4px;
-    border-radius: 6px;
-    list-style: none;
-    box-shadow: 0 2px 10px var(--black-a7);
-    margin: 0;
-    cursor: pointer;
-  }
+.NavigationMenuList {
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba(44, 106, 169, 0.658); /* Transparent background */
+  padding: 4px;
+  border-radius: 6px;
+  list-style: none;
+  box-shadow: 0 2px 10px var(--black-a7);
+  margin: 0;
+  cursor: pointer;
+}
 
-  .NavigationMenuTrigger {
-    padding: 8px 15px;
-    outline: none;
-    user-select: none;
-    font-weight: 500;
-    line-height: 1;
-    border-radius: 4px;
-    font-size: 15px;
-    color: white; /* Set text color to white */
-    cursor: pointer;
-    text-align: center; /* Center text */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2px;
-  }
+.NavigationMenuTrigger,
+.NavigationMenuLink {
+  padding: 8px 15px;
+  outline: none;
+  user-select: none;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: 4px;
+  font-size: 15px;
+  color: white; /* Set text color to white */
+  cursor: pointer;
+  text-align: center; /* Center text */
+}
 .NavigationMenuTrigger:focus,
 .NavigationMenuLink:focus {
   box-shadow: 0 0 0 2px var(--violet-7);
 }
+.NavigationMenuTrigger:hover,
 .NavigationMenuLink:hover {
-    background-color: var(--violet-3);
-  }
+  background-color: var(--violet-3);
+}
 
 .NavigationMenuTrigger {
   display: flex;
@@ -61,31 +60,24 @@ p {
 }
 
 .NavigationMenuLink {
-    display: block;
-    text-decoration: none;
-    font-size: 15px;
-    line-height: 1;
-    padding: 12px;
-    border-radius: 6px;
-    color: white; /* Set text color to white */
-    cursor: pointer;
-    text-align: center; /* Center text */
-  }
+  display: block;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1;
+}
 
 .NavigationMenuContent {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: auto; /* Adjusted width */
-    background-color: rgba(44, 106, 169, 0.658); /* Match background color */
-    border-radius: 6px;
-    padding: 10px;
-    text-align: center; /* Center text */
-  }
-  .NavigationMenuContent.open {
-    display: block; /* Show when menuOpen is true */
-  }
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: auto; /* Adjusted width */
+  background-color: rgba(44, 106, 169, 0.658); /* Match background color */
+  border-radius: 6px;
+  padding: 10px;
+  animation-duration: 250ms;
+  animation-timing-function: ease;
+  text-align: center; /* Center text */
+}
 .NavigationMenuContent[data-motion='from-start'] {
   animation-name: enterFromLeft;
 }
