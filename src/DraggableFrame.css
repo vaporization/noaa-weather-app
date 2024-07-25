@@ -1,0 +1,33 @@
+.draggable-container {
+    position: absolute;
+    z-index: 1000;
+  }
+  
+  .resizable-container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .handle {
+    padding: 10px;
+    cursor: move;
+    background-color: #007bff;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    user-select: none;
+    z-index: 1001;
+  }
+  
+  .iframe-container {
+    flex-grow: 1;
+    position: relative;
+  }
+  

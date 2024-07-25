@@ -44,6 +44,7 @@ const getConvertedData = (data, type) => {
     return (
       <div key={index} className={`data-entry ${index === 0 ? 'highlight' : ''}`}>
         <p><strong>Time:</strong> {localTime}</p>
+        <br></br>
         <p><strong>Value:</strong> {displayValue}</p>
       </div>
     );

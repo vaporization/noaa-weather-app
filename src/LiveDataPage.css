@@ -4,6 +4,8 @@ body, html {
   transition: background 0.1s ease;
   color: #fff;
   overflow-x: hidden; /* Prevent horizontal overflow */
+  background: radial-gradient(circle at center, #003057, #001F3D); /* Ensure background is applied to body */
+  min-height: 100vh; /* Ensure the body covers the full viewport height */
 }
 
 h1, h2 {
@@ -18,15 +20,6 @@ h1, h2 {
   width: 100%;
   min-height: 100vh; /* Ensure the page container covers at least the full viewport height */
   overflow: hidden; /* Hide overflow content */
-}
-
-.wave-container {
-  position: fixed; /* Fixed position to always be at the top */
-  width: 100%;
-  top: 0;
-  height: 150px; /* Set height to accommodate wave header */
-  z-index: 0; /* Lower z-index to place behind other elements */
-  transform: rotate(180deg); /* Rotate the wave */
 }
 
 .select-container {
@@ -117,4 +110,71 @@ select:hover {
   display: inline-block;
   width: 60px;
   color: #001F3D; /* Darker Blue */
+}
+
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+/* New styles for the status icon and menu */
+.status-icon {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.menu {
+  position: fixed;
+  top: 40px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 3;
+}
+
+.menu a, .menu button {
+  display: block;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.menu button:hover, .menu a:hover {
+  text-decoration: underline;
+}
+
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-links a {
+  margin-right: 10px;
+}
+
+/* Ensure the wave container is always at the top */
+.wave-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 150px;
+  z-index: 0;
 }

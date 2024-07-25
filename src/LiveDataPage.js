@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataDisplay from './DataDisplay';
 import { regions } from './stations';
-import Wave from 'react-wavify';
+import DraggableFrame from './DraggableFrame';
 import './LiveDataPage.css';
 
 const LiveDataPage = () => {
@@ -11,6 +11,9 @@ const LiveDataPage = () => {
   const [hasError, setHasError] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedStation, setSelectedStation] = useState('');
+  const [showRadar, setShowRadar] = useState(false);
+  const [showWindData, setShowWindData] = useState(false);
+  const [showFishHabitat, setShowFishHabitat] = useState(false);
 
   useEffect(() => {
     if (!selectedStation) return;
@@ -83,64 +86,8 @@ const LiveDataPage = () => {
     setSelectedStation(event.target.value);
   };
 
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      const x = event.clientX / window.innerWidth;
-      const y = event.clientY / window.innerHeight;
-      document.body.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, #003057, #001F3D)`;
-    };
-  
-    const handleScroll = () => {
-      const yScroll = window.scrollY / document.body.scrollHeight;
-      document.body.style.backgroundPosition = `50% ${yScroll * 200}%`;
-    };
-  
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-  
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="page-container">
-      <div className="wave-container">
-        <Wave
-          fill="rgba(18, 119, 176, 0.45)"
-          paused={false}
-          options={{
-            height: 20,
-            amplitude: 20,
-            speed: 0.15,
-            points: 3
-          }}
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
-        />
-        <Wave
-          fill="rgba(10, 90, 150, 0.45)"
-          paused={false}
-          options={{
-            height: 30,
-            amplitude: 30,
-            speed: 0.2,
-            points: 5
-          }}
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
-        />
-        <Wave
-          fill="rgba(5, 60, 120, 0.45)"
-          paused={false}
-          options={{
-            height: 40,
-            amplitude: 40,
-            speed: 0.25,
-            points: 4
-          }}
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
-        />
-      </div>
       <h1>Live Weather and Water Data</h1>
       <div className="select-container">
         <select value={selectedRegion} onChange={handleRegionChange}>
@@ -179,15 +126,15 @@ const LiveDataPage = () => {
         </div>
       )}
 
-      <iframe
-        src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJsb2NhbCIsImNlbnRlciI6Wy03Ni41NjcsMzcuMDkxXSwibG9jYXRpb24iOm51bGwsInpvb20iOjkuODU2NjY2NjY4NTQwNTQ4LCJmaWx0ZXIiOm51bGwsImxheWVyIjoic3JfYnJlZiIsInN0YXRpb24iOiJLQUtRIn0sImFuaW1hdGluZyI6ZmFsc2UsImJhc2UiOiJzdGFuZGFyZCIsImFydGNjIjpmYWxzZSwiY291bnR5IjpmYWxzZSwiY3dhIjpmYWxzZSwicmZjIjpmYWxzZSwic3RhdGUiOmZhbHNlLCJtZW51Ijp0cnVlLCJzaG9ydEZ1c2VkT25seSI6dHJ1ZSwib3BhY2l0eSI6eyJhbGVydHMiOjAuOCwibG9jYWwiOjAuNiwibG9jYWxTdGF0aW9ucyI6MC44LCJuYXRpb25hbCI6MC42fX0%3D"
-        width="100%"
-        height="600px"
-        style={{ border: 'none', marginTop: '20px' }}
-        title="NWS Radar"
-      ></iframe>
+      <DraggableFrame title="NWS Radar" src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJsb2NhbCIsImNlbnRlciI6Wy03Ni41NjcsMzcuMDkxXSwibG9jYXRpb24iOm51bGwsInpvb20iOjkuODU2NjY2NjY4NTQwNTQ4LCJmaWx0ZXIiOm51bGwsImxheWVyIjoic3JfYnJlZiIsInN0YXRpb24iOiJLQUtRIn0sImFuaW1hdGluZyI6ZmFsc2UsImJhc2UiOiJzdGFuZGFyZCIsImFydGNjIjpmYWxzZSwiY291bnR5IjpmYWxzZSwiY3dhIjpmYWxzZSwicmZjIjpmYWxzZSwic3RhdGUiOmZhbHNlLCJtZW51Ijp0cnVlLCJzaG9ydEZ1c2VkT25seSI6dHJ1ZSwib3BhY2l0eSI6eyJhbGVydHMiOjAuOCwibG9jYWwiOjAuNiwibG9jYWxTdGF0aW9ucyI6MC44LCJuYXRpb25hbCI6MC42fX0%3D" />
+
+      <DraggableFrame title="NOAA Wind Data Map" src="https://www.wrh.noaa.gov/map/?obs=true&wfo=sto&basemap=OpenStreetMap&boundaries=true,false&obs_popup=true" />
+
+      <DraggableFrame title="NOAA Essential Fish Habitat Mapper" src="https://www.habitat.noaa.gov/apps/efhmapper/" />
+
       <h3>All data is collected from NOAA and NWS</h3>
-      <p>Buy me a coffee!   Cashapp: <b>$SW1337</b></p>
+
+      <p>Buy me a coffee! Cashapp: <b>$SW1337</b></p>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* Existing styles */
 .App {
   text-align: center;
 }
@@ -24,4 +25,94 @@
 
 select {
   margin: 10px;
+}
+
+/* New styles for fade transitions */
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.app-container {
+  position: relative;
+}
+
+.menu {
+  position: fixed;
+  top: 190px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.25); /* 25% opacity */
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 3;
+}
+
+.menu a, .menu button {
+  display: block;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.menu button:hover, .menu a:hover {
+  text-decoration: underline;
+}
+
+.status-icon {
+  position: fixed;
+  top: 150px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+/* Ensuring the gradient background is always present */
+body, html {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  transition: background 0.1s ease;
+  color: #fff;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  background: radial-gradient(circle, #003057, #001F3D);
+}
+
+.content {
+  margin-top: 200px; /* Adjust this value as needed to move content below waves */
+  padding: 20px;
+}
+
+/* Additional padding for left side */
+.page-container {
+  padding-left: 0px; /* Adjust as necessary to fix scaling/padding issue */
+}
+
+/* Fix wave container width */
+.wave-container {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
