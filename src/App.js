@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LiveDataPage from './LiveDataPage';
 import Login from './Login';
@@ -8,7 +8,7 @@ import RegistrationConfirmation from './RegistrationConfirmation';
 import LoginConfirmation from './LoginConfirmation';
 import EmailAlreadyUsed from './EmailAlreadyUsed';
 import Profile from './Profile';
-import PasswordReset from './PasswordReset';
+import PasswordReset from './PasswordReset'; // Import the PasswordReset component
 import StatusIcon from './StatusIcon';
 import { auth } from './firebase';
 import { signOut } from 'firebase/auth';
@@ -31,7 +31,7 @@ const Layout = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out');
-        window.location.href = '/noaa-weather-app/login';
+        window.location.href = '/#/login';
       })
       .catch((error) => {
         console.error('Error signing out:', error);
@@ -74,7 +74,7 @@ const Layout = () => {
               <Route path="/login-confirmation" element={<LoginConfirmation />} />
               <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
               <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
-              <Route path="/password-reset" element={<PasswordReset />} />
+              <Route path="/password-reset" element={<PasswordReset />} /> {/* Add this route */}
             </Routes>
           </CSSTransition>
         </TransitionGroup>
@@ -85,7 +85,7 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <Router basename="/noaa-weather-app">
+    <Router>
       <div className="wave-container">
         <Wave
           fill="rgba(18, 119, 176, 0.45)"
