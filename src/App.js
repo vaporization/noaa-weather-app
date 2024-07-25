@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LiveDataPage from './LiveDataPage';
 import Login from './Login';
@@ -8,7 +8,7 @@ import RegistrationConfirmation from './RegistrationConfirmation';
 import LoginConfirmation from './LoginConfirmation';
 import EmailAlreadyUsed from './EmailAlreadyUsed';
 import Profile from './Profile';
-import PasswordReset from './PasswordReset'; // Import the PasswordReset component
+import PasswordReset from './PasswordReset';
 import StatusIcon from './StatusIcon';
 import { auth } from './firebase';
 import { signOut } from 'firebase/auth';
