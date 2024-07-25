@@ -63,7 +63,7 @@ const Layout = () => {
     <>
       <StatusIcon isLoggedIn={isLoggedIn} />
       <NavigationMenuDemo />
-      <div className="page-container">
+      <div className="content">
         <TransitionGroup>
           <CSSTransition key={location.key} classNames="fade" timeout={300}>
             <Routes location={location}>
@@ -121,7 +121,9 @@ const App = () => {
           style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, transform: 'rotate(180deg)' }}
         />
       </div>
-      <Layout />
+      <div className="page-container">
+        <Layout />
+      </div>
     </Router>
   );
 };
