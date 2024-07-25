@@ -31,7 +31,7 @@ const Layout = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out');
-        window.location.href = '/noaa-weather-app/login';
+        window.location.href = '/noaa-weather-app/#/login';
       })
       .catch((error) => {
         console.error('Error signing out:', error);
@@ -74,7 +74,7 @@ const Layout = () => {
               <Route path="/login-confirmation" element={<LoginConfirmation />} />
               <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
               <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
-              <Route path="/password-reset" element={<PasswordReset />} /> {/* Add this route */}
+              <Route path="/password-reset" element={<PasswordReset />} />
             </Routes>
           </CSSTransition>
         </TransitionGroup>
