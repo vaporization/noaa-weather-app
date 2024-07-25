@@ -34,19 +34,19 @@ const NavigationMenuDemo = () => {
             <ul className="List">
               <li>
                 <NavigationMenu.Link asChild>
-                  <a className="NavigationMenuLink" href="#/">Home</a>
+                  <a className="NavigationMenuLink" href="/noaa-weather-app/">Home</a>
                 </NavigationMenu.Link>
               </li>
               {!isLoggedIn && (
                 <>
                   <li>
                     <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/login">Login</a>
+                      <a className="NavigationMenuLink" href="/noaa-weather-app/login">Login</a>
                     </NavigationMenu.Link>
                   </li>
                   <li>
                     <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/register">Register</a>
+                      <a className="NavigationMenuLink" href="/noaa-weather-app/register">Register</a>
                     </NavigationMenu.Link>
                   </li>
                 </>
@@ -55,7 +55,7 @@ const NavigationMenuDemo = () => {
                 <>
                   <li>
                     <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/profile">Profile</a>
+                      <a className="NavigationMenuLink" href="/noaa-weather-app/profile">Profile</a>
                     </NavigationMenu.Link>
                   </li>
                   <li>

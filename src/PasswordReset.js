@@ -23,20 +23,22 @@ const PasswordReset = () => {
   };
 
   return (
-    <div className="password-reset-container">
-      <h2>Reset Password</h2>
-      <form onSubmit={handlePasswordReset}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Reset Password</button>
-      </form>
-      {message && <p className="success-message">{message}</p>}
-      {error && <p className="error-message">{error}</p>}
+    <div className="reset-password-container">
+      <div className="reset-password-form">
+        <h2>Reset Password</h2>
+        <form onSubmit={handlePasswordReset}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button type="submit">Reset Password</button>
+        </form>
+        {message && <p className="success-message">{message}</p>}
+        {error && <p className="error-message">{error}</p>}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,25 @@
+/* src/Profile.css */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .profile-content {
+    background-color: rgba(44, 106, 169, 0.658);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .profile-content h2 {
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .profile-content p {
+    color: white;
+  }
+  

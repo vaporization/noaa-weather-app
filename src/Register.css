@@ -1,6 +1,5 @@
-/* PasswordReset.css */
-
-.reset-password-container {
+/* src/Register.css */
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +7,7 @@
     width: 175vh;
   }
   
-  .reset-password-form {
+  .register-form {
     background-color: rgba(44, 106, 169, 0.658);
     padding: 20px;
     border-radius: 8px;
@@ -16,12 +15,12 @@
     text-align: center;
   }
   
-  .reset-password-form h2 {
+  .register-form h2 {
     margin-bottom: 20px;
     color: white;
   }
   
-  .reset-password-form input {
+  .register-form input {
     display: block;
     width: 88%;
     padding: 10px;
@@ -30,7 +29,7 @@
     border-radius: 4px;
   }
   
-  .reset-password-form button {
+  .register-form button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -40,15 +39,7 @@
     margin-bottom: 10px;
   }
   
-  .reset-password-form button:hover {
+  .register-form button:hover {
     background-color: #0056b3;
-  }
-  
-  .success-message {
-    color: green;
-  }
-  
-  .error-message {
-    color: red;
   }
   

@@ -8,7 +8,7 @@ import RegistrationConfirmation from './RegistrationConfirmation';
 import LoginConfirmation from './LoginConfirmation';
 import EmailAlreadyUsed from './EmailAlreadyUsed';
 import Profile from './Profile';
-import PasswordReset from './PasswordReset'; // Import the PasswordReset component
+import PasswordReset from './PasswordReset';
 import StatusIcon from './StatusIcon';
 import { auth } from './firebase';
 import { signOut } from 'firebase/auth';
@@ -74,7 +74,7 @@ const Layout = () => {
               <Route path="/login-confirmation" element={<LoginConfirmation />} />
               <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
               <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
-              <Route path="/password-reset" element={<PasswordReset />} /> {/* Add this route */}
+              <Route path="/password-reset" element={<PasswordReset />} />
             </Routes>
           </CSSTransition>
         </TransitionGroup>

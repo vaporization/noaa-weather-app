@@ -1,11 +1,14 @@
-// src/Profile.js
 import React from 'react';
+import './Profile.css';
 
 const Profile = () => {
   return (
-    <div>
-      <h1>User Profile</h1>
-      <p>Welcome to your profile page!</p>
+    <div className="profile-container">
+      <div className="profile-content">
+        <h2>Profile</h2>
+        <p>Welcome to your profile page.</p>
+        {/* Add more profile-related content here */}
+      </div>
     </div>
   );
 };
