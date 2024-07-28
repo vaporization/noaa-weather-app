@@ -116,3 +116,66 @@ body, html {
   left: 0;
   z-index: 0;
 }
+
+/* New styles for changing menu colors */
+:root {
+  --menu-background-color: #286090;
+  --menu-text-color: #FFFFFF;
+  --button-color: #286090;
+}
+
+.NavigationMenuRoot {
+  background-color: var(--menu-background-color);
+}
+
+.NavigationMenuList {
+  position: fixed ;
+  top: 180px;
+  right: 10px;
+  width: 96px;
+  background-color: var(--menu-background-color);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.NavigationMenuLink {
+  color: var(--menu-text-color);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.NavigationMenuLink:hover {
+  text-decoration: underline;
+}
+
+.NavigationMenuTrigger {
+  background: none;
+  border: none;
+  color: var(--menu-text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 0;
+}
+
+button, .data-display {
+  background-color: var(--button-color);
+  color: var(--menu-text-color);
+}
+
+.data-column {
+  background: var(--menu-background-color);
+  border: 0px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: calc(33.33% - 40px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}

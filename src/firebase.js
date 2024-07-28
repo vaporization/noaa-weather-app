@@ -1,5 +1,7 @@
+// firebase.js
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, sendPasswordResetEmail } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDi2R117GuFcFtG1G8WU5C0qD1MCE4MiPA",
@@ -17,7 +19,8 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
 console.log("Firebase initialized:", app);
 
-export { auth, googleProvider, sendPasswordResetEmail };
+export { auth, googleProvider, sendPasswordResetEmail, db };

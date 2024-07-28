@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { CaretDownIcon } from '@radix-ui/react-icons';
-import { auth } from './firebase'; 
+import { auth } from './firebase';
 import './styles.css';
+import './NavigationMenuDemo.css';
 
-const NavigationMenuDemo = () => {
+const NavigationMenuDemo = ({ menuColors }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -25,51 +25,43 @@ const NavigationMenuDemo = () => {
 
   return (
     <NavigationMenu.Root className="NavigationMenuRoot">
-      <NavigationMenu.List className="NavigationMenuList">
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger className="NavigationMenuTrigger">
-            Menu <CaretDownIcon className="CaretDown" aria-hidden />
-          </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="NavigationMenuContent">
-            <ul className="List">
-              <li>
+      <NavigationMenu.List className="NavigationMenuList" style={{ backgroundColor: menuColors.backgroundColor }}>
+        <div className="NavigationMenuCenter">
+          <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
+            <NavigationMenu.Link asChild>
+              <a className="NavigationMenuLink" href="#/">Home</a>
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+          {!isLoggedIn && (
+            <>
+              <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
                 <NavigationMenu.Link asChild>
-                  <a className="NavigationMenuLink" href="#/">Home</a>
+                  <a className="NavigationMenuLink" href="#/login">Login</a>
                 </NavigationMenu.Link>
-              </li>
-              {!isLoggedIn && (
-                <>
-                  <li>
-                    <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/login">Login</a>
-                    </NavigationMenu.Link>
-                  </li>
-                  <li>
-                    <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/register">Register</a>
-                    </NavigationMenu.Link>
-                  </li>
-                </>
-              )}
-              {isLoggedIn && (
-                <>
-                  <li>
-                    <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" href="#/profile">Profile</a>
-                    </NavigationMenu.Link>
-                  </li>
-                  <li>
-                    <NavigationMenu.Link asChild>
-                      <a className="NavigationMenuLink" onClick={handleLogout}>Logout</a>
-                    </NavigationMenu.Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
+              </NavigationMenu.Item>
+              <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
+                <NavigationMenu.Link asChild>
+                  <a className="NavigationMenuLink" href="#/register">Register</a>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
+                <NavigationMenu.Link asChild>
+                  <a className="NavigationMenuLink" href="#/profile">Profile</a>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+              <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
+                <NavigationMenu.Link asChild>
+                  <button className="NavigationMenuLink" onClick={handleLogout}>Logout</button>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            </>
+          )}
+        </div>
       </NavigationMenu.List>
-
       <div className="ViewportPosition">
         <NavigationMenu.Viewport className="NavigationMenuViewport" />
       </div>

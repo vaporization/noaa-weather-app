@@ -13,6 +13,8 @@ h1, h2 {
   position: relative;
   z-index: 2; /* Higher z-index to appear above the wave */
   text-align: center;
+  margin: 0; /* Remove margin to prevent extra block above the title */
+  padding-top: 20px; /* Adjust padding to maintain spacing */
 }
 
 .page-container {
@@ -25,7 +27,7 @@ h1, h2 {
 .select-container {
   display: flex;
   justify-content: center;
-  margin-top: 112px; /* Adjust margin to ensure content is visible below the wave */
+  margin-top: 20px; /* Adjust margin to ensure content is visible below the wave */
   margin-bottom: 20px;
   z-index: 1; /* Higher z-index to appear above the wave */
   position: relative;
@@ -136,11 +138,9 @@ select:hover {
 .menu {
   position: fixed;
   top: 40px;
-  right: 10px;
+  right: 50px; /* Adjust position */
   background-color: rgba(255, 255, 255, 0.25);
-
   padding: 10px;
-  border-radius: 5px;
   z-index: 3;
 }
 

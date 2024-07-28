@@ -6,26 +6,56 @@ import Login from './Login';
 import Register from './Register';
 import RegistrationConfirmation from './RegistrationConfirmation';
 import LoginConfirmation from './LoginConfirmation';
-import EmailAlreadyUsed from './EmailAlreadyUsed';
+import EmailAlreadyUsed from './EmailAlreadyUsed'; // Ensure this import is here
 import Profile from './Profile';
 import PasswordReset from './PasswordReset';
 import StatusIcon from './StatusIcon';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import { signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import Wave from 'react-wavify';
 import NavigationMenuDemo from './NavigationMenuDemo';
 import './App.css';
 
-const Layout = () => {
+const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, menuColors, setMenuColors, dataColumnColors, setDataColumnColors, dataEntryColor, setDataEntryColor }) => { // Updated
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setIsLoggedIn(!!user);
+      if (user) {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          setGradientColors({
+            start: data.gradientColors.start || '#003057',
+            end: data.gradientColors.end || '#001F3D'
+          });
+          setWaveColors({
+            wave1: data.waveColors.wave1 || 'rgba(18, 119, 176, 0.45)',
+            wave2: data.waveColors.wave2 || 'rgba(10, 90, 150, 0.45)',
+            wave3: data.waveColors.wave3 || 'rgba(5, 60, 120, 0.45)',
+            wave1Alpha: data.waveColors.wave1Alpha || '0.45',
+            wave2Alpha: data.waveColors.wave2Alpha || '0.45',
+            wave3Alpha: data.waveColors.wave3Alpha || '0.45'
+          });
+          setMenuColors({
+            backgroundColor: data.menuColors.backgroundColor || '#286090',
+            textColor: data.menuColors.textColor || '#FFFFFF',
+            buttonColor: data.menuColors.buttonColor || '#286090'
+          });
+          setDataColumnColors({
+            textColor: data.dataColumnColors.textColor || '#FFFFFF',
+            backgroundColor: data.dataColumnColors.backgroundColor || '#FFFFFF',
+            alpha: data.dataColumnColors.alpha || '1'
+          });
+          setDataEntryColor(data.dataEntryColor || '#FFFFFF'); // New
+        }
+      }
     });
     return () => unsubscribe();
-  }, []);
+  }, [setGradientColors, setWaveColors, setMenuColors, setDataColumnColors, setDataEntryColor]);
 
   const handleLogout = () => {
     signOut(auth)
@@ -42,7 +72,7 @@ const Layout = () => {
     const handleMouseMove = (event) => {
       const x = event.clientX / window.innerWidth;
       const y = event.clientY / window.innerHeight;
-      document.body.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, #003057, #001F3D)`;
+      document.body.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, ${gradientColors.start}, ${gradientColors.end})`;
     };
 
     const handleScroll = () => {
@@ -57,22 +87,31 @@ const Layout = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [gradientColors]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--menu-background-color', menuColors.backgroundColor);
+    document.documentElement.style.setProperty('--menu-text-color', menuColors.textColor);
+    document.documentElement.style.setProperty('--button-color', menuColors.buttonColor);
+    document.documentElement.style.setProperty('--data-column-background-color', dataColumnColors.backgroundColor); // New
+    document.documentElement.style.setProperty('--data-column-alpha', dataColumnColors.alpha); // New
+    document.documentElement.style.setProperty('--data-entry-color', dataEntryColor); // New
+  }, [menuColors, dataColumnColors, dataEntryColor]);
 
   return (
     <>
       <StatusIcon isLoggedIn={isLoggedIn} />
-      <NavigationMenuDemo />
+      <NavigationMenuDemo menuColors={menuColors} />
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="fade" timeout={300}>
           <Routes location={location}>
-            <Route path="/" element={<LiveDataPage />} />
+            <Route path="/" element={<LiveDataPage dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} />} /> {/* Updated */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/registration-confirmation" element={<RegistrationConfirmation />} />
             <Route path="/login-confirmation" element={<LoginConfirmation />} />
             <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
-            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login />} />
+            <Route path="/profile" element={isLoggedIn ? <Profile setGradientColors={setGradientColors} setWaveColors={setWaveColors} setMenuColors={setMenuColors} setDataColumnColors={setDataColumnColors} setDataEntryColor={setDataEntryColor} /> : <Login />} /> {/* Updated */}
             <Route path="/password-reset" element={<PasswordReset />} />
           </Routes>
         </CSSTransition>
@@ -82,11 +121,39 @@ const Layout = () => {
 };
 
 const App = () => {
+  const [gradientColors, setGradientColors] = useState({
+    start: '#003057',
+    end: '#001F3D',
+  });
+
+  const [waveColors, setWaveColors] = useState({
+    wave1: 'rgba(18, 119, 176, 0.45)',
+    wave2: 'rgba(10, 90, 150, 0.45)',
+    wave3: 'rgba(5, 60, 120, 0.45)',
+    wave1Alpha: '0.45',
+    wave2Alpha: '0.45',
+    wave3Alpha: '0.45'
+  });
+
+  const [menuColors, setMenuColors] = useState({
+    backgroundColor: '#286090',
+    textColor: '#FFFFFF',
+    buttonColor: '#286090'
+  });
+
+  const [dataColumnColors, setDataColumnColors] = useState({
+    textColor: '#000000',
+    backgroundColor: '#FFFFFF',
+    alpha: '1'
+  });
+
+  const [dataEntryColor, setDataEntryColor] = useState('#FFFFFF'); // New
+
   return (
     <Router>
       <div className="wave-container">
         <Wave
-          fill="rgba(18, 119, 176, 0.45)"
+          fill={waveColors.wave1}
           paused={false}
           options={{
             height: 20,
@@ -97,7 +164,7 @@ const App = () => {
           style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, transform: 'rotate(180deg)' }}
         />
         <Wave
-          fill="rgba(10, 90, 150, 0.45)"
+          fill={waveColors.wave2}
           paused={false}
           options={{
             height: 30,
@@ -108,7 +175,7 @@ const App = () => {
           style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, transform: 'rotate(180deg)' }}
         />
         <Wave
-          fill="rgba(5, 60, 120, 0.45)"
+          fill={waveColors.wave3}
           paused={false}
           options={{
             height: 40,
@@ -120,7 +187,7 @@ const App = () => {
         />
       </div>
       <div className="page-container">
-        <Layout />
+        <Layout gradientColors={gradientColors} setGradientColors={setGradientColors} waveColors={waveColors} setWaveColors={setWaveColors} menuColors={menuColors} setMenuColors={setMenuColors} dataColumnColors={dataColumnColors} setDataColumnColors={setDataColumnColors} dataEntryColor={dataEntryColor} setDataEntryColor={setDataEntryColor} /> {/* Updated */}
       </div>
     </Router>
   );

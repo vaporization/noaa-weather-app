@@ -13,18 +13,16 @@ p {
 .NavigationMenuRoot {
   position: absolute;
   top: 150px;
-  right: 50px;
+  right: 150px;
   z-index: 3;
 }
 
 .NavigationMenuList {
   display: flex;
   justify-content: flex-end;
-  background-color: rgba(44, 106, 169, 0.658); /* Transparent background */
+  background-color: transparent; /* Make background transparent */
   padding: 4px;
-  border-radius: 6px;
   list-style: none;
-  box-shadow: 0 2px 10px var(--black-a7);
   margin: 0;
   cursor: pointer;
 }
@@ -41,11 +39,14 @@ p {
   color: white; /* Set text color to white */
   cursor: pointer;
   text-align: center; /* Center text */
+  margin: 0 5px; /* Add spacing between buttons */
 }
+
 .NavigationMenuTrigger:focus,
 .NavigationMenuLink:focus {
   box-shadow: 0 0 0 2px var(--violet-7);
 }
+
 .NavigationMenuTrigger:hover,
 .NavigationMenuLink:hover {
   background-color: var(--violet-3);
@@ -79,15 +80,19 @@ p {
   text-align: center; /* Center text */
   z-index: 3; /* Ensure it's above other elements */
 }
+
 .NavigationMenuContent[data-motion='from-start'] {
   animation-name: enterFromLeft;
 }
+
 .NavigationMenuContent[data-motion='from-end'] {
   animation-name: enterFromRight;
 }
+
 .NavigationMenuContent[data-motion='to-start'] {
   animation-name: exitToLeft;
 }
+
 .NavigationMenuContent[data-motion='to-end'] {
   animation-name: exitToRight;
 }
@@ -102,9 +107,11 @@ p {
   z-index: 1;
   transition: width, transform 250ms ease;
 }
+
 .NavigationMenuIndicator[data-state='visible'] {
   animation: fadeIn 1800ms ease;
 }
+
 .NavigationMenuIndicator[data-state='hidden'] {
   animation: fadeOut 1800ms ease;
 }
@@ -122,9 +129,11 @@ p {
   transition: width, height, 1800ms ease;
   text-align: center; /* Center text */
 }
+
 .NavigationMenuViewport[data-state='open'] {
   animation: scaleIn 200ms ease;
 }
+
 .NavigationMenuViewport[data-state='closed'] {
   animation: scaleOut 200ms ease;
 }
@@ -150,9 +159,11 @@ p {
   text-align: center; /* Center text */
   color: white; /* Set text color to white */
 }
+
 .ListItemLink:focus {
   box-shadow: 0 0 0 2px var(--violet-7);
 }
+
 .ListItemLink:hover {
   background-color: var(--mauve-3);
 }
@@ -183,6 +194,7 @@ p {
   outline: none;
   user-select: none;
 }
+
 .Callout:focus {
   box-shadow: 0 0 0 2px var(--violet-7);
 }
@@ -218,6 +230,7 @@ p {
   top: 1px;
   transition: transform 250ms ease;
 }
+
 [data-state='open'] > .CaretDown {
   transform: rotate(-180deg);
 }

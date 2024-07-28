@@ -1,7 +1,7 @@
 import React from 'react';
 import './DataDisplay.css';
 
-const getConvertedData = (data, type) => {
+const getConvertedData = (data, type, dataColumnColors, dataEntryColor) => { // Updated
   if (!data || data.length === 0) {
     return <p>No data available for this station.</p>;
   }
@@ -42,7 +42,7 @@ const getConvertedData = (data, type) => {
     }).format(time);
 
     return (
-      <div key={index} className={`data-entry ${index === 0 ? 'highlight' : ''}`}>
+      <div key={index} className={`data-entry ${index === 0 ? 'highlight' : ''}`} style={{ color: dataColumnColors.textColor, backgroundColor: dataEntryColor }}> {/* Updated */}
         <p><strong>Time:</strong> {localTime}</p>
         <br></br>
         <p><strong>Value:</strong> {displayValue}</p>
@@ -51,11 +51,11 @@ const getConvertedData = (data, type) => {
   });
 };
 
-const DataDisplay = ({ title, data }) => {
+const DataDisplay = ({ title, data, dataColumnColors, dataEntryColor }) => { // Updated
   return (
-    <div className="data-column">
+    <div className="data-column" style={{ color: dataColumnColors.textColor, backgroundColor: dataColumnColors.backgroundColor, opacity: dataColumnColors.alpha }}>
       <h2>{title}</h2>
-      {getConvertedData(data, title)}
+      {getConvertedData(data, title, dataColumnColors, dataEntryColor)} {/* Updated */}
     </div>
   );
 };

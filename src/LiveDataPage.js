@@ -5,7 +5,7 @@ import { regions } from './stations';
 import DraggableFrame from './DraggableFrame';
 import './LiveDataPage.css';
 
-const LiveDataPage = () => {
+const LiveDataPage = ({ dataColumnColors, dataEntryColor }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -89,6 +89,11 @@ const LiveDataPage = () => {
   return (
     <div className="page-container">
       <h1>Live Weather and Water Data</h1>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      
       <div className="select-container">
         <select value={selectedRegion} onChange={handleRegionChange}>
           <option value="">Select a region</option>
@@ -112,18 +117,18 @@ const LiveDataPage = () => {
       </div>
 
       {isLoading ? (
-        <p>Select station to load data...</p>
+       <center> <p>Select station to load data...</p> </center>
       ) : hasError ? (
-        <p>Failed to load data or no data available. Station might be offline.</p>
+        <center> <p>Failed to load data or no data available. Station might be offline.</p> </center>
       ) : (
         <div className="data-container">
-          <DataDisplay title="Water Level" data={data.waterLevel} />
-          <DataDisplay title="Tide Predictions" data={data.tidePredictions} />
-          <DataDisplay title="Water Temperature" data={data.waterTemperature} />
-          <DataDisplay title="Air Pressure" data={data.airPressure} />
-          <DataDisplay title="Air Temperature" data={data.airTemperature} />
-          <DataDisplay title="Wind Speed" data={data.windSpeed} />
-        </div>
+        <DataDisplay title="Water Level" data={data.waterLevel} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+        <DataDisplay title="Tide Predictions" data={data.tidePredictions} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+        <DataDisplay title="Water Temperature" data={data.waterTemperature} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+        <DataDisplay title="Air Pressure" data={data.airPressure} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+        <DataDisplay title="Air Temperature" data={data.airTemperature} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+        <DataDisplay title="Wind Speed" data={data.windSpeed} dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} /> {/* Updated */}
+      </div>
       )}
 
       <DraggableFrame title="NWS Radar" src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJsb2NhbCIsImNlbnRlciI6Wy03Ni41NjcsMzcuMDkxXSwibG9jYXRpb24iOm51bGwsInpvb20iOjkuODU2NjY2NjY4NTQwNTQ4LCJmaWx0ZXIiOm51bGwsImxheWVyIjoic3JfYnJlZiIsInN0YXRpb24iOiJLQUtRIn0sImFuaW1hdGluZyI6ZmFsc2UsImJhc2UiOiJzdGFuZGFyZCIsImFydGNjIjpmYWxzZSwiY291bnR5IjpmYWxzZSwiY3dhIjpmYWxzZSwicmZjIjpmYWxzZSwic3RhdGUiOmZhbHNlLCJtZW51Ijp0cnVlLCJzaG9ydEZ1c2VkT25seSI6dHJ1ZSwib3BhY2l0eSI6eyJhbGVydHMiOjAuOCwibG9jYWwiOjAuNiwibG9jYWxTdGF0aW9ucyI6MC44LCJuYXRpb25hbCI6MC42fX0%3D" />
@@ -132,9 +137,9 @@ const LiveDataPage = () => {
 
       <DraggableFrame title="NOAA Essential Fish Habitat Mapper" src="https://www.habitat.noaa.gov/apps/efhmapper/" />
 
-      <h3>All data is collected from NOAA and NWS</h3>
+      <center><h3>All data is collected from NOAA and NWS</h3></center>
 
-      <p>Buy me a coffee! Cashapp: <b>$SW1337</b></p>
+      <center><p>Buy me a coffee! Cashapp: <b>$SW1337</b></p></center>
     </div>
   );
 };
