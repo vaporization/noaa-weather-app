@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from './firebase';
-import { saveUserPreferences, getUserPreferences, resetUserPreferences } from './userPreferences';
+import { saveUserPreferences, getUserPreferences, resetUserPreferences, saveUserTheme, getUserThemes, deleteUserTheme } from './userPreferences';
 import './Profile.css';
 
 const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColumnColors, setDataEntryColor }) => {
@@ -13,14 +13,16 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
   const [wave2Alpha, setWave2Alpha] = useState(0.45);
   const [wave3Alpha, setWave3Alpha] = useState(0.45);
   const [menuBackgroundColor, setMenuBackgroundColor] = useState('#286090');
-  const [menuTextColor, setMenuTextColor] = useState('#FFFFFF');
+  const [menuTextColor, setMenuTextColor] = useState('#000000');
   const [menuButtonColor, setMenuButtonColor] = useState('#286090');
-  const [dataColumnTextColor, setDataColumnTextColor] = useState('#FFFFFF');
+  const [dataColumnTextColor, setDataColumnTextColor] = useState('#000000');
   const [dataColumnBackgroundColor, setDataColumnBackgroundColor] = useState('#FFFFFF');
   const [dataColumnAlpha, setDataColumnAlpha] = useState(1);
-  const [dataEntryBackgroundColor, setDataEntryBackgroundColor] = useState('#FFFFFF'); // New state for data entry background color
+  const [dataEntryBackgroundColor, setDataEntryBackgroundColor] = useState('#FFFFFF');
   const [message, setMessage] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [themeName, setThemeName] = useState('');
+  const [themes, setThemes] = useState([]);
 
   useEffect(() => {
     const fetchPreferences = async () => {
@@ -28,6 +30,8 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
         const user = auth.currentUser;
         if (user) {
           const data = await getUserPreferences(user.uid);
+          const themesData = await getUserThemes(user.uid);
+          setThemes(themesData || []);
           if (data) {
             const { gradientColors, waveColors, menuColors, dataColumnColors, dataEntryColor } = data;
             if (gradientColors) {
@@ -46,13 +50,13 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
             }
             if (menuColors) {
               setMenuBackgroundColor(menuColors.backgroundColor || '#286090');
-              setMenuTextColor(menuColors.textColor || '#FFFFFF');
+              setMenuTextColor(menuColors.textColor || '#000000');
               setMenuButtonColor(menuColors.buttonColor || '#286090');
               setMenuColors(menuColors);
             } else {
               setMenuColors({
                 backgroundColor: '#286090',
-                textColor: '#FFFFFF',
+                textColor: '#000000',
                 buttonColor: '#286090'
               });
             }
@@ -63,7 +67,7 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
               setDataColumnColors(dataColumnColors);
             } else {
               setDataColumnColors({
-                textColor: '#FFFFFF',
+                textColor: '#000000',
                 backgroundColor: '#FFFFFF',
                 alpha: '1'
               });
@@ -83,6 +87,16 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
 
     fetchPreferences();
   }, [setGradientColors, setWaveColors, setMenuColors, setDataColumnColors, setDataEntryColor]);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // Reset state when user logs out
+        setThemes([]);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSave = async () => {
     try {
@@ -108,15 +122,15 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
           backgroundColor: dataColumnBackgroundColor,
           alpha: dataColumnAlpha.toString()
         };
-        const dataEntryColor = dataEntryBackgroundColor; // New
-        await saveUserPreferences(user.uid, gradientColors, waveColors, menuColors, dataColumnColors, dataEntryColor); // Updated
+        const dataEntryColor = dataEntryBackgroundColor;
+        await saveUserPreferences(user.uid, gradientColors, waveColors, menuColors, dataColumnColors, dataEntryColor);
         setGradientColors(gradientColors);
         setWaveColors(waveColors);
         setMenuColors(menuColors);
         setDataColumnColors(dataColumnColors);
         setDataEntryColor(dataEntryColor);
         setMessage('Preferences saved successfully!');
-        setTimeout(() => setButtonDisabled(false), 2000); // Re-enable the button after 2 seconds
+        setTimeout(() => setButtonDisabled(false), 2000);
       }
     } catch (error) {
       setMessage(`Error saving preferences: ${error.message}`);
@@ -146,22 +160,22 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
           wave3Alpha: '0.45'
         });
         setMenuBackgroundColor('#286090');
-        setMenuTextColor('#FFFFFF');
+        setMenuTextColor('#000000');
         setMenuButtonColor('#286090');
         setMenuColors({
           backgroundColor: '#286090',
-          textColor: '#FFFFFF',
+          textColor: '#000000',
           buttonColor: '#286090'
         });
-        setDataColumnTextColor('#FFFFFF');
+        setDataColumnTextColor('#000000');
         setDataColumnBackgroundColor('#FFFFFF');
         setDataColumnAlpha(1);
         setDataColumnColors({
-          textColor: '#FFFFFF',
+          textColor: '#000000',
           backgroundColor: '#FFFFFF',
           alpha: '1'
         });
-        setDataEntryBackgroundColor('#FFFFFF'); // Reset data entry background color
+        setDataEntryBackgroundColor('#FFFFFF');
         setDataEntryColor('#FFFFFF');
         setMessage('Preferences reset to default successfully!');
       }
@@ -204,9 +218,82 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
     setDataColumnAlpha(alpha);
   };
 
-  const handleDataEntryBackgroundColorChange = (e) => { // New
+  const handleDataEntryBackgroundColorChange = (e) => {
     const color = e.target.value;
     setDataEntryBackgroundColor(color);
+  };
+
+  const handleSaveTheme = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user && themeName) {
+        const gradientColors = { start: startColor, end: endColor };
+        const waveColors = {
+          wave1: wave1Color,
+          wave2: wave2Color,
+          wave3: wave3Color,
+          wave1Alpha: wave1Alpha.toString(),
+          wave2Alpha: wave2Alpha.toString(),
+          wave3Alpha: wave3Alpha.toString()
+        };
+        const menuColors = {
+          backgroundColor: menuBackgroundColor,
+          textColor: menuTextColor,
+          buttonColor: menuButtonColor
+        };
+        const dataColumnColors = {
+          textColor: dataColumnTextColor,
+          backgroundColor: dataColumnBackgroundColor,
+          alpha: dataColumnAlpha.toString()
+        };
+        const dataEntryColor = dataEntryBackgroundColor;
+        await saveUserTheme(user.uid, themeName, gradientColors, waveColors, menuColors, dataColumnColors, dataEntryColor);
+        const updatedThemes = await getUserThemes(user.uid);
+        setThemes(updatedThemes);
+        setMessage('Theme saved successfully!');
+      } else {
+        setMessage('Please enter a theme name.');
+      }
+    } catch (error) {
+      setMessage(`Error saving theme: ${error.message}`);
+    }
+  };
+
+  const handleApplyTheme = (theme) => {
+    setStartColor(theme.gradientColors.start);
+    setEndColor(theme.gradientColors.end);
+    setWave1Color(theme.waveColors.wave1);
+    setWave2Color(theme.waveColors.wave2);
+    setWave3Color(theme.waveColors.wave3);
+    setWave1Alpha(parseFloat(theme.waveColors.wave1Alpha));
+    setWave2Alpha(parseFloat(theme.waveColors.wave2Alpha));
+    setWave3Alpha(parseFloat(theme.waveColors.wave3Alpha));
+    setMenuBackgroundColor(theme.menuColors.backgroundColor);
+    setMenuTextColor(theme.menuColors.textColor);
+    setMenuButtonColor(theme.menuColors.buttonColor);
+    setDataColumnTextColor(theme.dataColumnColors.textColor);
+    setDataColumnBackgroundColor(theme.dataColumnColors.backgroundColor);
+    setDataColumnAlpha(parseFloat(theme.dataColumnColors.alpha));
+    setDataEntryBackgroundColor(theme.dataEntryColor);
+    setGradientColors(theme.gradientColors);
+    setWaveColors(theme.waveColors);
+    setMenuColors(theme.menuColors);
+    setDataColumnColors(theme.dataColumnColors);
+    setDataEntryColor(theme.dataEntryColor);
+  };
+
+  const handleDeleteTheme = async (themeName) => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await deleteUserTheme(user.uid, themeName);
+        const updatedThemes = await getUserThemes(user.uid);
+        setThemes(updatedThemes);
+        setMessage('Theme deleted successfully!');
+      }
+    } catch (error) {
+      setMessage(`Error deleting theme: ${error.message}`);
+    }
   };
 
   return (
@@ -252,14 +339,13 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
           />
         </div>
         <div className="color-picker">
-          
           <label>Wave 2 Color: </label>
           <input
             type="color"
             value={`#${wave2Color.match(/\d+/g).slice(0, 3).map((x) => (+x).toString(16).padStart(2, '0')).join('')}`}
             onChange={handleWaveColorChange(wave2Color, setWave2Color, wave2Alpha, setWave2Alpha)}
           />
-                    <br></br>
+          <br></br>
           <label>Transparency: </label>
           <input
             type="range"
@@ -277,7 +363,7 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
             value={`#${wave3Color.match(/\d+/g).slice(0, 3).map((x) => (+x).toString(16).padStart(2, '0')).join('')}`}
             onChange={handleWaveColorChange(wave3Color, setWave3Color, wave3Alpha, setWave3Alpha)}
           />
-                    <br></br>
+          <br></br>
           <label>Transparency: </label>
           <input
             type="range"
@@ -346,7 +432,7 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
             onChange={handleDataColumnAlphaChange}
           />
         </div>
-        <p>Customize your data entry background color:</p> {/* New */}
+        <p>Customize your data entry background color:</p>
         <div className="color-picker">
           <br></br>
           <label>Data Entry Background Color: </label>
@@ -359,6 +445,24 @@ const Profile = ({ setGradientColors, setWaveColors, setMenuColors, setDataColum
         <br></br>
         <button onClick={handleSave} disabled={buttonDisabled}>Save Preferences</button><br></br><br></br>
         <button onClick={handleReset}>Reset to Default</button><br></br><br></br>
+        <div className="theme-management">
+          <h3>Manage Themes</h3>
+          <input type="text" placeholder="Enter theme name" value={themeName} onChange={(e) => setThemeName(e.target.value)} />
+          <button onClick={handleSaveTheme}>Save Theme</button>
+          {themes.length > 0 && (
+            <>
+              <h4>Saved Themes</h4>
+              <ul>
+                {themes.map((theme) => (
+                  <li key={theme.name}>
+                    <button onClick={() => handleApplyTheme(theme)}>Apply {theme.name}</button>
+                    <button onClick={() => handleDeleteTheme(theme.name)}>Delete</button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
         {message && <p>{message}</p>}
       </div>
     </div>

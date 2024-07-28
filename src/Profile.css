@@ -1,22 +1,32 @@
+/* src/Profile.css */
 .profile-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     padding: 20px;
+
   }
   
   .profile-content {
-    background-color: var(--menu-background-color); /* Updated to use menu background color */
-    opacity: var(--data-column-alpha); /* New */
+    background-color: var(--data-column-background-color);
+    opacity: var(--data-column-alpha);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
     max-width: 500px;
+    max-height: 100%; /* Ensure the content does not exceed the container height */
+    overflow-y: auto; /* Enable vertical scrolling inside the content if needed */
   }
   
+
+.data-column {
+    background-color: var(--data-column-background-color);
+    opacity: var(--data-column-alpha);
+  }
+
   .profile-content h2 {
     margin-bottom: 20px;
     color: var(--menu-text-color);
@@ -62,3 +72,4 @@
       padding: 15px;
     }
   }
+  
