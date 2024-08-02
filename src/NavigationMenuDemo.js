@@ -55,6 +55,11 @@ const NavigationMenuDemo = ({ menuColors }) => {
               </NavigationMenu.Item>
               <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
                 <NavigationMenu.Link asChild>
+                  <a className="NavigationMenuLink" href="#/alerts">Data Alerts</a>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+              <NavigationMenu.Item className="NavigationMenuItem" style={{ backgroundColor: menuColors.buttonColor }}>
+                <NavigationMenu.Link asChild>
                   <button className="NavigationMenuLink" onClick={handleLogout}>Logout</button>
                 </NavigationMenu.Link>
               </NavigationMenu.Item>

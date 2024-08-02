@@ -1,0 +1,101 @@
+body, html {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    transition: background 0.1s ease;
+    color: var(--text-color); /* Use a CSS variable for text color */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    background: radial-gradient(circle at center, #003057, #001F3D); /* Ensure background is applied to body */
+    min-height: 100vh; /* Ensure the body covers the full viewport height */
+  }
+  
+  h1, h2 {
+    color: var(--text-color); /* Use a CSS variable for text color */
+    position: relative;
+    z-index: 2; /* Higher z-index to appear above the wave */
+    text-align: center;
+  }
+  
+  .page-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* Ensure the page container covers at least the full viewport height */
+    overflow: hidden; /* Hide overflow content */
+  }
+  
+  .select-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 112px; /* Adjust margin to ensure content is visible below the wave */
+    margin-bottom: 20px;
+    z-index: 1; /* Higher z-index to appear above the wave */
+    position: relative;
+  }
+  
+  select {
+    margin: 0 10px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #404A5A; /* New Blue Color */
+    color: white;
+    border: 0px solid #1C6EA4; /* Darker Blue */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  select:hover {
+    background-color: #1C6EA4; /* Darker Blue */
+  }
+  
+  .alert-inputs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .alert-inputs label {
+    margin: 0 10px;
+    color: var(--text-color); /* Use a CSS variable for text color */
+  }
+  
+  .alert-inputs input {
+    padding: 5px;
+    font-size: 1em;
+    border: 1px solid #1C6EA4; /* Darker Blue */
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #1C6EA4; /* Darker Blue */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #404A5A; /* New Blue Color */
+  }
+  
+  .alerts-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .alerts-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .alerts-container li {
+    background: #f8f9fa;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--text-color); /* Use a CSS variable for text color */
+  }
+  

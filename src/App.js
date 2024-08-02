@@ -6,7 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import RegistrationConfirmation from './RegistrationConfirmation';
 import LoginConfirmation from './LoginConfirmation';
-import EmailAlreadyUsed from './EmailAlreadyUsed'; // Ensure this import is here
+import EmailAlreadyUsed from './EmailAlreadyUsed';
 import Profile from './Profile';
 import PasswordReset from './PasswordReset';
 import StatusIcon from './StatusIcon';
@@ -16,8 +16,9 @@ import { doc, getDoc } from 'firebase/firestore';
 import Wave from 'react-wavify';
 import NavigationMenuDemo from './NavigationMenuDemo';
 import './App.css';
+import DataAlerts from './DataAlerts';
 
-const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, menuColors, setMenuColors, dataColumnColors, setDataColumnColors, dataEntryColor, setDataEntryColor }) => { // Updated
+const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, menuColors, setMenuColors, dataColumnColors, setDataColumnColors, dataEntryColor, setDataEntryColor }) => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -50,7 +51,7 @@ const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, 
             backgroundColor: data.dataColumnColors.backgroundColor || '#FFFFFF',
             alpha: data.dataColumnColors.alpha || '1'
           });
-          setDataEntryColor(data.dataEntryColor || '#FFFFFF'); // New
+          setDataEntryColor(data.dataEntryColor || '#FFFFFF'); 
         }
       }
     });
@@ -93,9 +94,9 @@ const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, 
     document.documentElement.style.setProperty('--menu-background-color', menuColors.backgroundColor);
     document.documentElement.style.setProperty('--menu-text-color', menuColors.textColor);
     document.documentElement.style.setProperty('--button-color', menuColors.buttonColor);
-    document.documentElement.style.setProperty('--data-column-background-color', dataColumnColors.backgroundColor); // New
-    document.documentElement.style.setProperty('--data-column-alpha', dataColumnColors.alpha); // New
-    document.documentElement.style.setProperty('--data-entry-color', dataEntryColor); // New
+    document.documentElement.style.setProperty('--data-column-background-color', dataColumnColors.backgroundColor); 
+    document.documentElement.style.setProperty('--data-column-alpha', dataColumnColors.alpha); 
+    document.documentElement.style.setProperty('--data-entry-color', dataEntryColor); 
   }, [menuColors, dataColumnColors, dataEntryColor]);
 
   return (
@@ -105,14 +106,15 @@ const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, 
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="fade" timeout={300}>
           <Routes location={location}>
-            <Route path="/" element={<LiveDataPage dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} />} /> {/* Updated */}
+            <Route path="/" element={<LiveDataPage dataColumnColors={dataColumnColors} dataEntryColor={dataEntryColor} />} /> 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/registration-confirmation" element={<RegistrationConfirmation />} />
             <Route path="/login-confirmation" element={<LoginConfirmation />} />
             <Route path="/email-already-used" element={<EmailAlreadyUsed />} />
-            <Route path="/profile" element={isLoggedIn ? <Profile setGradientColors={setGradientColors} setWaveColors={setWaveColors} setMenuColors={setMenuColors} setDataColumnColors={setDataColumnColors} setDataEntryColor={setDataEntryColor} /> : <Login />} /> {/* Updated */}
+            <Route path="/profile" element={isLoggedIn ? <Profile setGradientColors={setGradientColors} setWaveColors={setWaveColors} setMenuColors={setMenuColors} setDataColumnColors={setDataColumnColors} setDataEntryColor={setDataEntryColor} /> : <Login />} />
             <Route path="/password-reset" element={<PasswordReset />} />
+            <Route path="/alerts" element={isLoggedIn ? <DataAlerts /> : <Login />} />  {/* New Route */}
           </Routes>
         </CSSTransition>
       </TransitionGroup>
@@ -147,7 +149,7 @@ const App = () => {
     alpha: '1'
   });
 
-  const [dataEntryColor, setDataEntryColor] = useState('#FFFFFF'); // New
+  const [dataEntryColor, setDataEntryColor] = useState('#FFFFFF');
 
   return (
     <Router>
@@ -187,7 +189,7 @@ const App = () => {
         />
       </div>
       <div className="page-container">
-        <Layout gradientColors={gradientColors} setGradientColors={setGradientColors} waveColors={waveColors} setWaveColors={setWaveColors} menuColors={menuColors} setMenuColors={setMenuColors} dataColumnColors={dataColumnColors} setDataColumnColors={setDataColumnColors} dataEntryColor={dataEntryColor} setDataEntryColor={setDataEntryColor} /> {/* Updated */}
+        <Layout gradientColors={gradientColors} setGradientColors={setGradientColors} waveColors={waveColors} setWaveColors={setWaveColors} menuColors={menuColors} setMenuColors={setMenuColors} dataColumnColors={dataColumnColors} setDataColumnColors={setDataColumnColors} dataEntryColor={dataEntryColor} setDataEntryColor={setDataEntryColor} />
       </div>
     </Router>
   );
