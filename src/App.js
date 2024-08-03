@@ -58,6 +58,8 @@ const Layout = ({ gradientColors, setGradientColors, waveColors, setWaveColors, 
     return () => unsubscribe();
   }, [setGradientColors, setWaveColors, setMenuColors, setDataColumnColors, setDataEntryColor]);
 
+  
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
