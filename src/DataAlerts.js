@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { regions } from './stations';
-import './DataAlerts.css';  // You can create a new CSS file similar to LiveDataPage.css or reuse the same one
+import './DataAlerts.css';
 
 const DataAlerts = () => {
   const [selectedRegion, setSelectedRegion] = useState('');
@@ -30,17 +30,20 @@ const DataAlerts = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const userId = 'user-id';  // Replace with actual user ID
+      const userId = 'user-id'; // Replace with actual user ID
       const response = await axios.post('/api/alerts', {
         userId,
         stationId: selectedStation,
-        conditions: alertConditions
+        conditions: alertConditions,
       });
+      console.log(response.data);
       setAlerts([...alerts, response.data]);
     } catch (error) {
-      console.error('Error creating alert:', error);
+      console.error("Error creating alert:", error);
+      alert('Failed to create alert: ' + error.message);
     }
   };
+  
 
   return (
     <div className="page-container">

@@ -1,0 +1,7 @@
+Flask==2.0.2
+requests
+geopy
+firebase-admin
+google-cloud-secret-manager
+flask-cors
+Werkzeug==2.0.2

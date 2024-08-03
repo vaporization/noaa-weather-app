@@ -1,15 +1,18 @@
+import os
+import json
 from flask import Flask, request, jsonify
 import requests
-from geopy.distance import geodesic
 from firebase_admin import firestore, initialize_app, credentials
 from google.cloud import secretmanager
 from flask_cors import CORS
-import json
-import os
+import logging
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
 # Function to get secret from Google Cloud Secret Manager
 def get_secret(project_id, secret_id):
@@ -22,8 +25,15 @@ def get_secret(project_id, secret_id):
 # Set your Google Cloud project ID
 project_id = "701140997749"  # Replace with your actual project ID
 
-# Retrieve the Firebase service account key from Secret Manager
-service_account_key = get_secret(project_id, "firebase-service-account-key")
+# Retrieve the Firebase service account key from the file specified by GOOGLE_APPLICATION_CREDENTIALS
+service_account_file_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+if service_account_file_path:
+    if not os.path.exists(service_account_file_path):
+        raise FileNotFoundError(f"Service account file not found: {service_account_file_path}")
+    with open(service_account_file_path) as f:
+        service_account_key = json.load(f)
+else:
+    raise ValueError("The GOOGLE_APPLICATION_CREDENTIALS environment variable is not set or is empty.")
 
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate(service_account_key)
@@ -32,11 +42,11 @@ initialize_app(cred)
 # Initialize Firestore
 db = firestore.client()
 
-# NOAA stations with their coordinates
+# NOAA stations with their IDs
 stations = {
-    'Sewells Point': {'id': '8638610', 'coords': (36.95, -76.33)},
-    'Naval Station Norfolk': {'id': 'cb0402', 'coords': (36.95, -76.30)},
-    'South Craney Island': {'id': '8638595', 'coords': (36.92, -76.32)}
+    'Sewells Point': '8638610',
+    'Naval Station Norfolk': 'cb0402',
+    'South Craney Island': '8638595'
 }
 
 def fetch_noaa_data(station_id, product, range_hours=12):
@@ -59,18 +69,40 @@ def fetch_noaa_data(station_id, product, range_hours=12):
 
 @app.route('/stations', methods=['GET'])
 def get_stations():
-    user_coords = (float(request.args.get('lat')), float(request.args.get('lon')))
-    nearby_stations = sorted(stations.keys(), key=lambda s: geodesic(user_coords, stations[s]['coords']).miles)
-    return jsonify(nearby_stations)
+    return jsonify(list(stations.keys()))
 
 @app.route('/data', methods=['GET'])
 def get_data():
     station_name = request.args.get('station')
-    station_id = stations[station_name]['id']
+    station_id = stations.get(station_name)
+    if not station_id:
+        return jsonify({"error": "Station not found"}), 404
     product = request.args.get('product')
     data = fetch_noaa_data(station_id, product)
     return jsonify(data)
 
 @app.route('/api/alerts', methods=['POST'])
 def create_alert():
-    dat
+    logging.info("Received request to create alert")
+    try:
+        data = request.get_json()
+        logging.info(f"Alert data: {data}")
+        db.collection('alerts').add(data)
+        return jsonify({"success": True}), 201
+    except Exception as e:
+        logging.error(f"Error creating alert: {e}")
+        return jsonify({"error": "Failed to create alert"}), 500
+
+@app.route('/api/alerts/<user_id>', methods=['GET'])
+def get_alerts(user_id):
+    logging.info(f"Fetching alerts for user: {user_id}")
+    try:
+        alerts = db.collection('alerts').where('userId', '==', user_id).stream()
+        alerts_list = [alert.to_dict() for alert in alerts]
+        return jsonify(alerts_list), 200
+    except Exception as e:
+        logging.error(f"Error fetching alerts: {e}")
+        return jsonify({"error": "Failed to fetch alerts"}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3000, debug=True)

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  noaa-weather-app:
+    image: noaa-weather-app
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/service-account-file.json
+    volumes:
+      - ./path/to/your/service-account-file.json:/app/service-account-file.json

@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const api = axios.create({
+  baseURL: 'https://vaporization.github.io/noaa-weather-app/', // Update to your Flask server URL
+});
 
-export const getAlerts = () => {
-    const userId = 'currentUserId'; // Replace with the actual user ID logic
-    return axios.get(`${API_BASE_URL}/alerts/${userId}`);
+export const fetchAlerts = async (userId) => {
+  const response = await api.get(`/api/alerts/${userId}`);
+  return response.data;
 };
 
-export const createAlert = (alertData) => {
-    return axios.post(`${API_BASE_URL}/alerts`, alertData);
+export const createAlert = async (alertData) => {
+  const response = await api.post('/api/alerts', alertData);
+  return response.data;
 };

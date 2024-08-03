@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: "/app/service-account-file.json"
+    volumes:
+      - "C:\\Users\\saweb\\Downloads\\waterweatherdata-firebase-adminsdk-dotxc-5e405979c2.json:/app/service-account-file.json"
