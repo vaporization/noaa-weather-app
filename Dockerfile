@@ -1,10 +1,10 @@
-# Use the official image as a parent image
+# Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file from your host to your current location
+# Copy the requirements file from your host to your image filesystem
 COPY requirements.txt .
 
 # Install any dependencies
@@ -24,5 +24,5 @@ EXPOSE 3000
 # Set environment variable for Google credentials
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/service-account-file.json
 
-# Run the specified command within the container
+# Run the Flask app
 CMD ["python", "app.py"]
