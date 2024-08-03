@@ -1,14 +1,17 @@
-# Use the official Python image from the Docker Hub
+# Use the official image as a parent image
 FROM python:3.9-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file from your host to your image filesystem
+# Copy the requirements file from your host to your current location
 COPY requirements.txt .
 
 # Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the service account file from your host to your image filesystem
+COPY path/to/your/service-account-file.json /app/service-account-file.json
 
 # Copy the rest of your app's source code from your host to your image filesystem
 COPY . .
