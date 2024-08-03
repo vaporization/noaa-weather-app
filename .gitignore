@@ -3,3 +3,5 @@ service-account-file.json
 
 node_modules/
 .cache/
+
+node_modules/.cache/default-development/2.pack
