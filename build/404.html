@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+    <script>
+      // Redirect all 404 requests to index.html
+      var pathname = window.location.pathname;
+      if (pathname && pathname.indexOf('noaa-weather-app') !== -1) {
+        window.location.replace('/noaa-weather-app' + pathname.substring(pathname.indexOf('noaa-weather-app') + 'noaa-weather-app'.length));
+      } else {
+        window.location.replace('/noaa-weather-app');
+      }
+    </script>
+  </head>
+  <body>
+    <h1>404 - Page Not Found</h1>
+    <br> </br>
+    <h3>You have reached the end of the road!</h3>
+  </body>
+</html>
